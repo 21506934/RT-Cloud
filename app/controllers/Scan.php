@@ -1,5 +1,7 @@
 <?php
 use micro\js\Jquery;
+use micro\orm\DAO;
+
 /**
  * Contrôleur permettant d'afficher/gérer 1 disque
  * @author jcheron
@@ -17,8 +19,28 @@ class Scan extends BaseController {
 	 * @param int $idDisque
 	 */
 	public function show($idDisque) {
-		$diskName="Datas";
-		$this->loadView("scan/vFolder.html");
+		// On recupère le disque, les services et tarifs associés !
+		$disque = DAO::getOne("Disque", $idDisque);
+		DAO::getManyToMany($disque, "services");
+		DAO::getOneToMany($disque, "disqueTarifs");
+
+		// Si le disque possède un tarif, on recupère le premier sinon rien
+		if(count($disque->getDisqueTarifs()) > 0)
+			$tarif = $disque->getDisqueTarifs()[0]->getTarif();
+		else
+			$tarif = [];
+
+		// On crée un objet vide où on stocke la taille et pourcentage du disque utilisé 
+		$occupation = new stdClass();
+		$occupation->sizeUsed = DirectoryUtils::formatBytes((int)$disque->getSize());
+		$occupation->sizeMax = DirectoryUtils::formatBytes((int)$disque->getQuota());
+		$occupation->percentUsed = round(($disque->getSize()/$disque->getQuota())*100);
+
+		//On recupère le nom du disque
+		$diskName=$disque->getNom();
+
+		// On affiche la vue en lui passant les paramètres necessaires
+		$this->loadView("scan/vFolder.html", compact('disque', 'tarif', 'occupation'));
 		Jquery::executeOn("#ckSelectAll", "click","$('.toDelete').prop('checked', $(this).prop('checked'));$('#btDelete').toggle($('.toDelete:checked').length>0)");
 		Jquery::executeOn("#btUpload", "click", "$('#tabsMenu a:last').tab('show');");
 		Jquery::doJqueryOn("#btDelete", "click", "#panelConfirmDelete", "show");

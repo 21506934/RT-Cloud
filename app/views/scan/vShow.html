@@ -1,0 +1,51 @@
+<div id="content">
+	<div class="panel panel-default">
+		<div class="panel-heading">Caractéristique du disque</div>
+		<div class="panel-body">
+			<div>
+				<strong>Nom : </strong>
+				<span>{{disque.nom}}</span>
+				<a class="btn btn-default" href="Disques/frm/{{disque.id}}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>Modifier</a>
+			</div>
+
+			<div>
+				<strong>Propriétaire : </strong>
+				<span>{{disque.utilisateur.login}}</span>
+			</div>
+
+			<div>
+				<h3>Occupation</h3>
+				<p>{{occupation.sizeUsed}} ({{occupation.percentUsed}}%) sur {{occupation.sizeMax}}</p>
+
+				{% if (occupation.percentUsed <= 10) %}
+					<span class="label label-info">Peu occupé</span>
+				{% elseif (occupation.percentUsed > 10 and occupation.percentUsed <= 50) %}
+					<span class="label label-success">RAS</span>
+				{% elseif (occupation.percentUsed > 50 and occupation.percentUsed <= 80) %}
+					<span class="label label-warning">Forte occupation</span>
+				{% else %}
+					<span class="label label-danger">Proche saturation</span>					
+				{% endif %}
+			</div>
+
+			<div>
+				<h3>Tarification</h3>
+				<p>prix : {{tarif.prix}}€, marge de dépassement : {{tarif.margeDepassement}}%, coût de dépassement : {{tarif.coutDepassement}}</p>
+				<a class="btn btn-default" href="Disques/index" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>Modifier la tarification</a>
+			</div>
+
+			<div>
+				<h3>Services</h3>
+				{% for service in disque.services %}
+					<span class="label label-success">{{service.nom}}</span>
+				{% endfor %}
+			</div>
+
+		</div>
+	</div>
+	
+	<a class="btn btn-default" href="MyDisques/index" role="button" style="width:100%;background-color:#373743;color:#fff;">
+		<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+		<span>Fermer et retourner à <strong>Mes disques</strong></span>
+	</a>
+</div>
