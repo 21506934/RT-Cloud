@@ -1,6 +1,11 @@
 <div id="content">
 	<h2>Mes disques -> {{user.getLogin()}}</h2>
 
+	<a href="Disques/create" role="button" class="btn" style="background-color:#373743;color:#fff;">
+		<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+		<span>Créer un disque</span>
+	</a>	
+
 	{% for disque in user.disques %}
 		<div>
 			<div>
@@ -18,7 +23,7 @@
 				</div>
 			</div>
 
-			<a class="btn btn-default" href="Scan/show/{{disque.id}}" role="button" style="width:100%;">
+			<a class="btn btn-default" href="Scan/show/{{disque.id}}" role="button" style="width:100%;background-color:#373743;color:#fff;">
 				<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
 				<span>Ouvrir</span>
 			</a>
