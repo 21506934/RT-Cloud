@@ -1,0 +1,27 @@
+<div id="content">
+	<h2>Mes disques -> {{user.getLogin()}}</h2>
+
+	{% for disque in user.disques %}
+		<div>
+			<div>
+				<h4>
+					<span class="glyphicon glyphicon-hdd" aria-hidden="true"></span>
+					<span>{{disque.nom}}</span>  
+					<span class="badge">{{disque.sizeUsed}} / {{disque.sizeMax}}</span>
+				</h4>
+			</div>
+
+			<div class="progress">
+				<div class="progress-bar progress-bar-{{disque.statut}} progress-bar-striped" role="progressbar" aria-valuenow="{{ disque.percentUsed }}"
+				aria-valuemin="0" aria-valuemax="100" style="width:{{ disque.percentUsed }}%">
+					{{ disque.percentUsed }}%
+				</div>
+			</div>
+
+			<a class="btn btn-default" href="Scan/show/{{disque.id}}" role="button" style="width:100%;">
+				<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+				<span>Ouvrir</span>
+			</a>
+		</div>
+	{% endfor %}
+</div>
