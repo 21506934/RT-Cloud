@@ -1,0 +1,11 @@
+<div id="container">
+	<h2>Administration</h2>
+
+	<table class="table table-bordered">
+		{% include "admin/index.buttons.html" with {title: "Utilisateurs", icon: 'user', total: data.total.users, now: data.today.users } %}
+		{% include "admin/index.buttons.html" with {title: "Disques", icon: 'folder-close', total: data.total.disques, now: data.today.disques } %}
+		{% include "admin/index.buttons.html" with {title: "Tarifs", icon: 'euro'} %}
+		{% include "admin/index.buttons.html" with {title: "Services", icon: 'gift'} %}
+
+	</table>
+</div>
