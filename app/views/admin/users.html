@@ -1,0 +1,31 @@
+<div id="content">
+	<h1>Utilisateurs</h1>
+
+	<table class="table table-striped">
+		<thead>
+			<td><strong>Utilisateurs</strong></td>
+			<td><strong>Disques</strong></td>
+			<td><strong>Montant</strong></td>
+			<td style="width:18%;"></td>
+		</thead>
+		{% for user in users %}
+			<tr>
+				<td>{{user.getLogin()}}</td>
+				<td>
+					{% if user.nbDisques != 0 %}
+						<span class="label label-default">{{user.nbDisques}} disques</span>
+					{% endif %}
+				</td>
+				<td>
+					{% if user.prixTotal is defined %}<span class="label label-success">{{user.prixTotal}} €</span>{% endif %}
+				</td>
+				<td>
+					<a href="" role="button" class="btn" style="width:100%;background-color:#373743;color:#fff;">
+						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						<span>Ouvrir</span>
+					</a>	
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+</div>
