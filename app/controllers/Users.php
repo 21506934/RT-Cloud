@@ -1,4 +1,5 @@
 <?php
+use micro\js\Jquery;
 /**
  * Gestion des users
  * @author jcheron
@@ -11,6 +12,12 @@ class Users extends \_DefaultController {
 		parent::__construct();
 		$this->title="Utilisateurs";
 		$this->model="Utilisateur";
+	}
+
+	public function initialize() {
+		$breadcrumb = "Utilisateurs";
+		Jquery::setHtml('.breadcrumb', '<li><a href="'.$GLOBALS['config']['siteUrl'].'"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;Accueil</a></li><li><a href="#">&nbsp;'.$breadcrumb.'</a></li>');
+		echo Jquery::compile();
 	}
 
 	public function frm($id=NULL){

@@ -9,7 +9,11 @@ class MyDisques extends Controller{
 		if(!RequestUtils::isAjax()){
 			$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
 		}
+		$breadcrumb = "Mes Disques";
+		Jquery::setHtml('.breadcrumb', '<li><a href="'.$GLOBALS['config']['siteUrl'].'"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;Accueil</a></li><li><a href="#">&nbsp;'.$breadcrumb.'</a></li>');
+		echo Jquery::compile();
 	}
+
 	public function index() {
 		echo Jquery::compile();
 

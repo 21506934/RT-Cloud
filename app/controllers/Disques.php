@@ -1,5 +1,6 @@
 <?php
 use micro\orm\DAO;
+use micro\js\Jquery;
 class Disques extends \_DefaultController {
 
 	public function __construct(){
@@ -7,6 +8,12 @@ class Disques extends \_DefaultController {
 		$this->title="Disques";
 		$this->model="Disque";
 	}
+
+	public function initialize() {
+		$breadcrumb = "Disques";
+		Jquery::setHtml('.breadcrumb', '<li><a href="'.$GLOBALS['config']['siteUrl'].'"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;Accueil</a></li><li><a href="#">&nbsp;'.$breadcrumb.'</a></li>');
+		echo Jquery::compile();
+	}	
 
 	public function index() {
 		// Si l'utilisateur est connecté, on appelle la fonction parente pour afficher la page

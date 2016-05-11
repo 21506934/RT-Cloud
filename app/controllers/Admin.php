@@ -1,5 +1,6 @@
 <?php
 use micro\orm\DAO;
+use micro\js\Jquery;
 class Admin extends \BaseController {
 
 	public function initialize() {
@@ -11,6 +12,10 @@ class Admin extends \BaseController {
 			$this->loadView("main/vInfo",array("message"=>"Accès à une ressource non autorisée","type"=>"danger","dismissable"=>true,"timerInterval"=>0,"visible"=>true));
 			die();
 		}
+
+		$breadcrumb = "Administration";
+		Jquery::setHtml('.breadcrumb', '<li><a href="'.$GLOBALS['config']['siteUrl'].'"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;Accueil</a></li><li><a href="#">&nbsp;'.$breadcrumb.'</a></li>');
+		echo Jquery::compile();
 	}
 
 	public function index() {

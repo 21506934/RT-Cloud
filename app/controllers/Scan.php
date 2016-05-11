@@ -11,7 +11,12 @@ use micro\orm\DAO;
 class Scan extends BaseController {
 
 	public function index(){
+	}
 
+	public function initialize() {
+		$breadcrumb = "Scan";
+		Jquery::setHtml('.breadcrumb', '<li><a href="'.$GLOBALS['config']['siteUrl'].'"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;Accueil</a></li><li><a href="#">&nbsp;'.$breadcrumb.'</a></li>');
+		echo Jquery::compile();
 	}
 
 	/**
