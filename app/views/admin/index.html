@@ -2,10 +2,32 @@
 	<h2>Administration</h2>
 
 	<table class="table table-bordered">
-		{% include "admin/index.buttons.html" with {title: "Utilisateurs", icon: 'user', total: data.total.users, now: data.today.users } %}
-		{% include "admin/index.buttons.html" with {title: "Disques", icon: 'folder-close', total: data.total.disques, now: data.today.disques } %}
-		{% include "admin/index.buttons.html" with {title: "Tarifs", icon: 'euro'} %}
-		{% include "admin/index.buttons.html" with {title: "Services", icon: 'gift'} %}
+		{% include "admin/index.buttons.html" with 
+			{title: "Utilisateurs", 
+			 icon: 'user', 
+			 total: data.total.users, 
+			 now: data.today.users, 
+			 newLink: 'Users/frm',
+			 openLink: 'Admin/users'} 
+		%}
+		{% include "admin/index.buttons.html" with 
+			{title: "Disques", 
+			 icon: 'folder-close', 
+			 total: data.total.disques, 
+			 now: data.today.disques, 
+			 newLink: 'Disques/frm',
+			 openLink: 'Admin/disques' } 
+		%}
+		{% include "admin/index.buttons.html" with 
+			{title: "Tarifs",
+			 icon: 'euro',
+			 newLink: 'Tarifs/frm',
+			 openLink: 'Tarifs'} %}
+		{% include "admin/index.buttons.html" with 
+			{title: "Services",
+			 icon: 'gift',
+			 newLink: 'Services/frm',
+			 openLink: 'Services'} %}
 
 	</table>
 </div>
