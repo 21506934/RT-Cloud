@@ -1,0 +1,36 @@
+<div id="container">
+	<h2>Disques</h2>
+
+	{% for user in users %}
+		{% if user.disques|length > 0 %}
+		<h4>{{user.toString()}}</h4>
+
+		<table class="table table-bordered">
+			{% for disque in user.disques %}
+			<tr>
+				<td style="width:25%;">
+					<strong>{{disque.nom}}</strong>
+				</td>
+				<td style="width:25%;">
+					<p>{{disque.getTarif().toString()|raw}}</p>
+				</td>
+				<td style="width:25%;">
+					<div class="progress">
+						<div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="{{ disque.percentUsed }}"
+						aria-valuemin="0" aria-valuemax="100" style="width:{{ disque.percentUsed }}%">
+							{{ disque.percentUsed }}%
+						</div>
+					</div>
+				</td>
+				<td style="width:25%;">
+					<a href="" role="button" class="btn" style="width:100%;background-color:#373743;color:#fff;">
+						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						<span>Ouvrir</span>
+					</a>	
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+		{% endif %}
+	{% endfor %}
+</div>

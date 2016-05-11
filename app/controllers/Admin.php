@@ -34,4 +34,26 @@ class Admin extends \BaseController {
 
 		$this->loadView('admin/users.html', ["users" => $users]);
 	}
+
+	public function disques($idUtilisateur = NULL) {
+
+		$cond = ($idUtilisateur) ? "id = $idUtilisateur" : "";
+		$users = DAO::getAll('Utilisateur', $cond);
+
+		foreach ($users as $user) {
+			DAO::getOneToMany($user, 'disques');   
+
+			foreach ($user->getDisques() as $disque) {
+				// Utilisation d'exception pour verifier que le disque existe bien, sinon ses variables à 0.
+				try {
+					$disque->percentUsed = round(($disque->getSize()/$disque->getQuota())*100);
+				} catch (Exception $e) {
+					$disque->percentUsed = 0;
+				}
+			}
+		}
+
+		$this->loadView('admin/disques.html', ["users" => $users]);
+
+	}
 }
