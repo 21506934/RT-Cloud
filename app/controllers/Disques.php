@@ -8,6 +8,17 @@ class Disques extends \_DefaultController {
 		$this->model="Disque";
 	}
 
+	public function index() {
+		// Si l'utilisateur est connecté, on appelle la fonction parente pour afficher la page
+		if (Auth::getUser() != NULL) {
+			parent::index();
+		// Sinon message d'erreur
+		} else {
+			$this->loadView("main/vInfo",array("message"=>"Vous devez être connecté pour voir cette page","type"=>"danger","dismissable"=>true,"timerInterval"=>0,"visible"=>true));
+			die();
+		}
+	}
+
 
 	public function frm($id=NULL){
 		$disque=$this->getInstance($id);

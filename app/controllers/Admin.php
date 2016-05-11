@@ -2,6 +2,17 @@
 use micro\orm\DAO;
 class Admin extends \BaseController {
 
+	public function initialize() {
+		// On execute la fonction parente
+		parent::initialize();
+
+		// Si l'utilisateur connecté n'est pas admin, on lui affiche un message d'erreur et on arrete la page
+		if((int)Auth::getUser()->getAdmin() != 1) {
+			$this->loadView("main/vInfo",array("message"=>"Accès à une ressource non autorisée","type"=>"danger","dismissable"=>true,"timerInterval"=>0,"visible"=>true));
+			die();
+		}
+	}
+
 	public function index() {
 		$data = new stdClass();
 		$data->total = new stdClass();

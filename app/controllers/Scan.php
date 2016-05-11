@@ -21,6 +21,13 @@ class Scan extends BaseController {
 	public function show($idDisque) {
 		// On recupère le disque, les services et tarifs associés !
 		$disque = DAO::getOne("Disque", $idDisque);
+
+		// Si l'utilisateur n'est pas connecté OU que son id et celui du disque demandé sont différent : Message d'erreur et arrêt
+		if((Auth::getUser() == NULL) || ($disque->getUtilisateur()->getId() != Auth::getUser()->getId())) {
+			$this->loadView("main/vInfo",array("message"=>"Accès à une ressource non autorisée","type"=>"danger","dismissable"=>true,"timerInterval"=>0,"visible"=>true));
+			die();
+		} 
+
 		DAO::getManyToMany($disque, "services");
 		DAO::getOneToMany($disque, "disqueTarifs");
 
