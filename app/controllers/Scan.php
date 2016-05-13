@@ -14,6 +14,10 @@ class Scan extends BaseController {
 	}
 
 	public function initialize() {
+		// On execute la fonction parente
+		parent::initialize();
+
+		// On change le breadcrumb
 		$breadcrumb = "Scan";
 		Jquery::setHtml('.breadcrumb', '<li><a href="'.$GLOBALS['config']['siteUrl'].'"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;Accueil</a></li><li><a href="#">&nbsp;'.$breadcrumb.'</a></li>');
 		echo Jquery::compile();

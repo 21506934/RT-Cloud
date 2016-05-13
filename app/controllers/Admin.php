@@ -8,11 +8,12 @@ class Admin extends \BaseController {
 		parent::initialize();
 
 		// Si l'utilisateur connecté n'est pas admin, on lui affiche un message d'erreur et on arrete la page
-		if((int)Auth::getUser()->getAdmin() != 1) {
+		if((Auth::getUser() == NULL) || ((int)Auth::getUser()->getAdmin() != 1)) {
 			$this->loadView("main/vInfo",array("message"=>"Accès à une ressource non autorisée","type"=>"danger","dismissable"=>true,"timerInterval"=>0,"visible"=>true));
 			die();
 		}
 
+		// On change le breadcrumb
 		$breadcrumb = "Administration";
 		Jquery::setHtml('.breadcrumb', '<li><a href="'.$GLOBALS['config']['siteUrl'].'"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;Accueil</a></li><li><a href="#">&nbsp;'.$breadcrumb.'</a></li>');
 		echo Jquery::compile();
@@ -28,8 +29,8 @@ class Admin extends \BaseController {
 		$data->total->tarifs = DAO::count("Tarif");
 		$data->total->services = DAO::count("Service");
 
-		$data->today->users = DAO::count("Utilisateur", "createdAt = NOW()");
-		$data->today->disques = DAO::count("Disque", "createdAt = NOW()");
+		$data->today->users = DAO::count("Utilisateur", "DAY(createdAt) = DAY(NOW())");
+		$data->today->disques = DAO::count("Disque", "DAY(createdAt) = DAY(NOW())");
 
 		$this->loadView('admin/index.html', ["data" => $data]);
 	}
@@ -40,10 +41,11 @@ class Admin extends \BaseController {
 		foreach ($users as $user) {
 			DAO::getOneToMany($user, 'disques');   
 			$user->nbDisques = count($user->getDisques());
+			$user->montant = 0;
 			foreach ($user->getDisques() as $disque) {
 				DAO::getOneToMany($disque, 'disqueTarifs');
 				if ($disque->getTarif() != NULL) {
-					$user->prixTotal = $disque->getTarif()->getPrix();
+					$user->montant += $disque->getTarif()->getPrix();
 				}
 			}
 		}

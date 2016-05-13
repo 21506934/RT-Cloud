@@ -9,6 +9,10 @@ class MyDisques extends Controller{
 		if(!RequestUtils::isAjax()){
 			$this->loadView("main/vHeader.html",array("infoUser"=>Auth::getInfoUser()));
 		}
+		// On execute la fonction parente
+		parent::initialize();
+
+		// On change le breadcrumb
 		$breadcrumb = "Mes Disques";
 		Jquery::setHtml('.breadcrumb', '<li><a href="'.$GLOBALS['config']['siteUrl'].'"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;Accueil</a></li><li><a href="#">&nbsp;'.$breadcrumb.'</a></li>');
 		echo Jquery::compile();
@@ -18,6 +22,10 @@ class MyDisques extends Controller{
 		echo Jquery::compile();
 
 		$user = Auth::getUser();
+        if($user == NULL) {
+			$this->loadView("main/vInfo",array("message"=>"Vous devez être connecté pour voir cette page","type"=>"danger","dismissable"=>true,"timerInterval"=>0,"visible"=>true));
+			die();
+        }
 		//On recupère les disques de chaque utilisateur
 		DAO::getOneToMany($user, "disques");
 

@@ -17,10 +17,10 @@
 					{% endif %}
 				</td>
 				<td>
-					{% if user.prixTotal is defined %}<span class="label label-success">{{user.prixTotal}} €</span>{% endif %}
+					{% if user.montant != 0 %}<span class="label label-success">{{user.montant}} €</span>{% endif %}
 				</td>
 				<td>
-					<a href="" role="button" class="btn" style="width:100%;background-color:#373743;color:#fff;">
+					<a href="Admin/disques/{{user.id}}" role="button" class="btn" style="width:100%;background-color:#373743;color:#fff;">
 						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 						<span>Ouvrir</span>
 					</a>	
